@@ -1,5 +1,5 @@
-from rest_framework import serializers
 
+from rest_framework import serializers
 from apps.shared.exceptions.custom_exceptions import CustomException
 from apps.users.models.device import AppVersion
 

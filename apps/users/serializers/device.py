@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from apps.shared.exceptions.custom_exceptions import CustomException
-from apps.users.models import Device
+from apps.users.models.device import Device
 
 
 class DeviceRegisterSerializer(serializers.ModelSerializer):
@@ -17,9 +17,8 @@ class DeviceRegisterSerializer(serializers.ModelSerializer):
             'updated_at': {'read_only': True},
         }
 
-        @staticmethod
-        def validate_device_model(device_model):
-            "iPhone <script>alert('xss')</script>"
-            if 'script' in device_model:
-                raise CustomException(message_key='NOT_CREATED')
-            return device_model
+    def validate_device_model(self, device_model):
+        "iPhone <script>alert('xss')</script>"
+        if 'script' in device_model:
+            raise CustomException(message_key='NOT_CREATED')
+        return device_model
