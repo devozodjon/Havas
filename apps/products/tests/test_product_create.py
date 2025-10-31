@@ -2,6 +2,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from rest_framework import status
 from rest_framework.reverse import reverse_lazy
 from rest_framework.test import APITestCase
+from apps.products.models import ProductsModel
 
 
 class TestProductCreate(APITestCase):
@@ -24,6 +25,18 @@ class TestProductCreate(APITestCase):
         }
 
     def test_create_product_success(self):
-        response = self.client.post(path=self.url,data=self.payload,format='multipart')
-        self.assertEqual(response.status_code,status.HTTP_201_CREATED)
-        self.assertEqual(response.json().get('data').get('title'), "Osh")
+        response = self.client.post(
+            path=self.url,
+            data=self.payload,
+            format='multipart'
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        data = response.json().get('data')
+
+        self.assertIsNotNone(data)
+        self.assertEqual(data['title'], 'Osh')
+        self.assertEqual(data['category'], 'LUNCH')
+        self.assertEqual(data['measurement'], 'GR')
+        self.assertIn('image', data)
+        self.assertTrue(ProductsModel.objects.filter(title='Osh').exists())

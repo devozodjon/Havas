@@ -27,7 +27,7 @@ class ProductListCreateApiView(ListCreateAPIView):
                 data=response_serializer.data,
                 status_code=status.HTTP_201_CREATED,
             )
-        return CustomResponse.success(
+        return CustomResponse.error(
             message_key="VALIDATION_ERROR",
             errors = serializer.errors
         )
