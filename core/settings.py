@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'drf_spectacular',
 
     'apps.shared',
     'apps.users',
@@ -146,4 +147,13 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20,
     'EXCEPTION_HANDLER': 'apps.shared.exceptions.handler.custom_exception_handler',
     'DEFAULT_PAGINATION_CLASS': 'apps.shared.utils.custom_pagination.CustomPageNumberPagination',
+}
+# -------------------------------------------------------------------
+# Swagger CONFIG
+# -------------------------------------------------------------------
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'My Project',
+    'DESCRIPTION': 'My project description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
 }

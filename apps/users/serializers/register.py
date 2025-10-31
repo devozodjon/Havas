@@ -1,3 +1,5 @@
+from datetime import timedelta
+from django.utils import timezone
 from rest_framework import serializers
 from apps.users.models.user import User, VerificationCode
 from apps.users.utils.code_generators import (
@@ -114,8 +116,11 @@ class VerifyLoginCodeSerializer(serializers.Serializer):
         except (User.DoesNotExist, VerificationCode.DoesNotExist):
             raise serializers.ValidationError("Invalid email or code.")
 
-        if vcode.is_expired():
+        if (timezone.now() - vcode.created_at) > timedelta(minutes=15):
             raise serializers.ValidationError("Verification code expired.")
+
+        if vcode.used:
+            raise serializers.ValidationError("This code has already been used.")
 
         attrs["user"] = user
         return attrs
