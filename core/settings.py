@@ -31,6 +31,7 @@ ALLOWED_HOSTS = config.ALLOWED_HOSTS
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,7 +45,8 @@ INSTALLED_APPS = [
     'apps.shared',
     'apps.users',
     'apps.products',
-    'apps.history',
+    'apps.recipe',
+    'apps.stories',
 ]
 
 MIDDLEWARE = [
@@ -108,7 +110,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+LANGUAGES = (
+    ('en', 'English'),
+    ('uz', 'Uzbek')
+)
 
 TIME_ZONE = 'Asia/Tashkent'
 
@@ -140,21 +146,37 @@ AUTHENTICATION_BACKENDS = [
 # DJANGO REST FRAMEWORK CONFIG
 # -------------------------------------------------------------------
 
+# -------------------------------------------------------------------
+# DJANGO REST FRAMEWORK CONFIG
+# -------------------------------------------------------------------
+
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # JWT bilan authentication
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',  # Default permission
+    ],
     'PAGE_SIZE': 20,
-    'EXCEPTION_HANDLER': 'apps.shared.exceptions.handler.custom_exception_handler',
+    # 'EXCEPTION_HANDLER': 'apps.shared.exceptions.handler.custom_exception_handler',
     'DEFAULT_PAGINATION_CLASS': 'apps.shared.utils.custom_pagination.CustomPageNumberPagination',
 }
+
 # -------------------------------------------------------------------
-# Swagger CONFIG
+# SIMPLE JWT CONFIGURATION
 # -------------------------------------------------------------------
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'My Project',
-    'DESCRIPTION': 'My project description',
-    'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }
