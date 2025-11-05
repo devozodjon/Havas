@@ -1,3 +1,4 @@
+
 from rest_framework import serializers
 
 from apps.recipe.models import RecipeModel
@@ -14,3 +15,5 @@ class RecipeDetailSerializer(RecipeTranslationMixin,TranslatedFieldsReadMixin,se
             'id', 'title', 'description', 'image', 'video_url',
             'steps', 'cook_time', 'calories', 'rating', 'ingredients'
         ]
+
+

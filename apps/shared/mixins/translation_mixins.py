@@ -258,3 +258,4 @@ class TranslatedFieldsReadMixin:
                     'language': first.language
                 }
             return None
+

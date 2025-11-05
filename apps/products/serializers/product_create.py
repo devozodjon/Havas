@@ -4,7 +4,6 @@ from rest_framework import serializers
 from apps.products.models import ProductsModel
 from apps.shared.mixins.translation_mixins import (
     TranslatedFieldsWriteMixin,
-    TranslatedFieldsReadMixin
 )
 
 
@@ -34,10 +33,3 @@ class ProductListSerializer(serializers.ModelSerializer):
         model = ProductsModel
         exclude = ['title', 'description']
 
-
-class ProductDetailSerializer(ProductTranslationMixin, TranslatedFieldsReadMixin, serializers.ModelSerializer):
-    class Meta:
-        model = ProductsModel
-        fields = ['id', 'uuid', 'title', 'description',
-                  'price', 'real_price', 'measurement',
-                  'created_at', 'is_active', 'category', 'discount']
