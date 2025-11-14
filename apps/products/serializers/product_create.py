@@ -9,8 +9,8 @@ from apps.shared.mixins.translation_mixins import (
 
 class ProductTranslationMixin:
     """Shared configuration for OnBoarding serializers"""
-    translatable_fields = ['title', 'description', 'images']
-    media_fields = ['images']
+    translatable_fields = ['title', 'description']
+    media_fields = ['image']
 
 
 class ProductCreateSerializer(TranslatedFieldsWriteMixin, serializers.ModelSerializer):
@@ -19,12 +19,9 @@ class ProductCreateSerializer(TranslatedFieldsWriteMixin, serializers.ModelSeria
     class Meta:
         model = ProductsModel
         fields = [
-            'title_en', 'title_uz',
-            'description_en', 'description_uz',
             'price', 'real_price',
             'measurement',
             'is_active', 'category', 'discount',
-            'image'
         ]
 
 

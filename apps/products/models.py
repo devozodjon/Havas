@@ -18,7 +18,6 @@ class ProductCategory(models.TextChoices):
 
 class ProductsModel(BaseModel):
     media_files = GenericRelation('shared.Media',related_query_name='products')
-    image = models.ImageField(upload_to='products/', blank=True, null=True)
     title = models.CharField(max_length=128,db_index=True)
     description = models.TextField(blank=True)
 
